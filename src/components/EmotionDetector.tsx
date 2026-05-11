@@ -89,12 +89,13 @@ const EmotionDetector = () => {
       }
       setRunning(true);
       detectLoop();
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
+      const errorName = e instanceof DOMException ? e.name : "";
       const msg =
-        e?.name === "NotAllowedError"
+        errorName === "NotAllowedError"
           ? "Camera access denied. Please allow camera permission and try again."
-          : e?.name === "NotFoundError"
+          : errorName === "NotFoundError"
           ? "No webcam found on this device."
           : "Could not access webcam. Please check your device.";
       setError(msg);
